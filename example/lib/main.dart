@@ -34,9 +34,10 @@ class _MyHomePageState extends State<MyHomePage> {
       textSize: 8);
 
   List<BottomNavigationBarItem> items = [
-    BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home")),
-    BottomNavigationBarItem(icon: Icon(Icons.notifications), title: Text("Notifications")),
-    BottomNavigationBarItem(icon: Icon(Icons.face), title: Text("Profile"))
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.notifications), label: "Notifications"),
+    BottomNavigationBarItem(icon: Icon(Icons.face), label: "Profile")
   ];
   int dropdownSelected = 0;
 
@@ -62,26 +63,26 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Row(
-              children: <Widget>[
-                Text("Navigation Item: "),
-                Expanded(
-                  child: DropdownButton(
-                    isExpanded: true,
-                    hint: items[dropdownSelected].title,
-                    items:items.map((BottomNavigationBarItem item) {
-                      return new DropdownMenuItem(
-                        value: items.indexOf(item),
-                        child: item.title,
-                      );
-                    }).toList(),
-                    onChanged: (int i){
-                      setState(() {
-                        dropdownSelected = i;
-                      });
-                    },
-                  ),
-                )
-              ],
+            children: <Widget>[
+              Text("Navigation Item: "),
+              Expanded(
+                child: DropdownButton(
+                  isExpanded: true,
+                  hint: Text(items[dropdownSelected].label),
+                  items: items.map((BottomNavigationBarItem item) {
+                    return new DropdownMenuItem(
+                      value: items.indexOf(item),
+                      child: Text(item.label),
+                    );
+                  }).toList(),
+                  onChanged: (int i) {
+                    setState(() {
+                      dropdownSelected = i;
+                    });
+                  },
+                ),
+              )
+            ],
           ),
           Row(
             children: <Widget>[
@@ -96,10 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
           Row(
             children: <Widget>[
               Expanded(
-                child: RaisedButton(
-                  elevation: 0,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(elevation: 0),
                   child: Text("Add Badge"),
-                  onPressed: (){
+                  onPressed: () {
                     String s = _textEditingController.text;
                     setState(() {
                       items = badger.setBadge(items, s, dropdownSelected);
@@ -108,10 +109,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Expanded(
-                child: RaisedButton(
-                  elevation: 0,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(elevation: 0),
                   child: Text("Remove"),
-                  onPressed: (){
+                  onPressed: () {
                     setState(() {
                       items = badger.removeBadge(items, dropdownSelected);
                     });
@@ -119,10 +120,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               Expanded(
-                child: RaisedButton(
-                  elevation: 0,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(elevation: 0),
                   child: Text("Remove All"),
-                  onPressed: (){
+                  onPressed: () {
                     setState(() {
                       items = badger.removeAll(items);
                     });
